@@ -65,10 +65,12 @@ public class CycleBuffer<T> {
   }
 
   private boolean canPop() {
-    return start != end || length == capacity;
+//    return start != end || length == capacity;
+    return length > 0;
   }
 
   private boolean canPush() {
-    return !((end == capacity && start == 0) || (end != capacity && start != 0 && start == end));
+//    return !((end == capacity && start == 0) || (end != capacity && start != 0 && start == end));
+    return length < capacity;
   }
 }
