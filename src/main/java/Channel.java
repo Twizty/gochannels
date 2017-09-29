@@ -16,13 +16,14 @@ public class Channel<T> {
           send(obj);
         }
       } else {
-        mutex.notifyAll();
         this.buffer.push(obj);
+        mutex.notifyAll();
       }
     }
   }
 
   public T receive() throws BufferEmptyException {
+    T result;
     synchronized (mutex) {
       if (buffer.isEmpty()) {
         try {
@@ -32,8 +33,10 @@ public class Channel<T> {
         }
       }
 
+      result = this.buffer.pop();
       mutex.notifyAll();
-      return this.buffer.pop();
     }
   }
+
+  return result;
 }
